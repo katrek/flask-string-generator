@@ -2,5 +2,8 @@
 
 {% block content %}
 <h1>Generator</h1>
-<p>{{ password }}</p>
+    <h1 class="display-1">{{ password }}</h1>
+    <form method="POST" action="/index">
+    <button type="submit" class="generate">Generate Another</button>
+    </form>
 {% endblock content %}

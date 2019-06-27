@@ -1,17 +1,18 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import random
 import string
 
 app = Flask(__name__)
 
-def pw_gen(size = 8, chars=string.ascii_letters + string.digits + string.punctuation):
-	return ''.join(random.choice(chars) for _ in range(size))
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 def index():
+    def pw_gen(size=20, chars=string.ascii_letters + string.digits + string.punctuation):
+        return ''.join(random.choice(chars) for _ in range(size))
     password = pw_gen()
-    content = {'password' : password}
+    size = request.form.get('size') or '12'
+    content = {'password' : password, 'size' : size}
     return render_template('index.html', **content)
 
 @app.route('/about')
