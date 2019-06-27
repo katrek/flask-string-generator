@@ -5,14 +5,17 @@ import string
 app = Flask(__name__)
 
 
-@app.route('/')
-@app.route('/index', methods=['GET', 'POST'])
+def pw_gen(n=12):
+    return ''.join(random.choice('!@#$%^&*(' + string.ascii_uppercase + string.ascii_lowercase + string.digits) for x in range(int(n)))
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    def pw_gen(size=20, chars=string.ascii_letters + string.digits + string.punctuation):
-        return ''.join(random.choice(chars) for _ in range(size))
-    password = pw_gen()
-    size = request.form.get('size') or '12'
-    content = {'password' : password, 'size' : size}
+    n = request.form.get('n') or '12'
+    if int(n) < 8 or int(n) > 16:
+        return 'This page does not exist', 404
+    password = pw_gen(n)
+    length_options = [str(x) for x in range(8, 17)]
+    content = {'password' : password, 'n' : n, 'nums' : length_options}
     return render_template('index.html', **content)
 
 @app.route('/about')
