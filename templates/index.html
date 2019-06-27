@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Random String Generator</h1>
-    <h1 class="display-1">{{ password }}</h1>
+<h1 class="text-center">Random Password Generator</h1>
+    <h1 class="display-1 text-center">{{ password }}</h1>
+    <div class="text-center">
     <form method="POST" action="/">
-        <select name="n" value="{{ n }}">
+        <select class="text-center" name="n" value="{{ n }}">
             {% for num in nums %}
                 <option{% if num == n %} selected="selected"{% endif %}>{{ num }}</option>
             {% endfor %}
         </select>
         <button type="submit" class="generate btn btn-primary">Generate Another</button>
     </form>
+    </div>
 {% endblock content %}
